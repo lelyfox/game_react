@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+       <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+       <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+       <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+
+    <script type="text/babel">
+
+
+        function App(){
+
+            const [text, setText] = React.useState('')
+            const [game, setGame] = React.useState('')
+           
+            let [one,setOne] = React.useState([
+                {id: Math.random(), name: 'Smith'},
+                {id: Math.random(), name: 'Johnson'}])
+            let [two,setTwo] = React.useState([
+                {id: Math.random(), name: 'Williams'},
+                {id: Math.random(), name: 'Jones'}])
+            let [three,setThree] = React.useState([
+                {id: Math.random(), name: 'Brown'},
+                {id: Math.random(), name: 'Davis'}])
+
+
+            const addNote = (event) => {
+                event.preventDefault()
+                let el = {
+                    id: Math.random(), 
+                    name: text
+                }
+                setText('')
+                setGame('')
+                if(text.length > 2 && game == 'football'){
+                    setOne([...one, el])
+                    
+                }else if(text.length > 2 && game == 'basketball'){
+                    setTwo([...two, el])
+                    
+                }else if(text.length > 2 && game == 'volleyball'){
+                    setThree([...three, el])
+                    
+                }else{
+                    alert('Введите минимум 3 буквы или выберети игру')
+                }
+            }
+            
+            return (
+                <div className="wrapper">
+                    <form onSubmit={(event) => addNote(event)}>
+                        <input type="text"
+                               placeholder="Введите имя"
+                               value={text}
+                               onChange={(event) => setText(event.target.value)}
+                               />
+                        <select value={game} onChange={(event) => setGame(event.target.value)}>
+                            <option>выберите игру</option>
+                            <option>football</option>
+                            <option>basketball</option>
+                            <option>volleyball</option>
+                        </select>
+                        <button>add</button>
+                    </form>
+                    <ul className="list">
+                        <li>
+                            <h2>Football</h2>
+                            {one.map((item,i) => (
+                                <h3 key={item.id}>
+                                    {item.name}
+                                </h3>))}
+                            <h2>{one.gameName}</h2>
+                        </li>
+                        <li>
+                            <h2>Basketball</h2>
+                            {two.map((item,i) => (
+                                <h3 key={item.id}>
+                                    {item.name}
+                                </h3>))}                           
+                        </li>
+                        <li>
+                            <h2>Volleyball</h2>
+                            {three.map((item,i) => (
+                                <h3 key={item.id}>
+                                    {item.name}
+                                </h3>))}                           
+                        </li>
+                    </ul>
+                
+                </div>
+            )
+        }
+
+
+
+
+
+        const app = document.getElementById('root')
+        const root = ReactDOM.createRoot(app)
+        root.render(<App/>)
+    </script>
+</body>
+</html>
